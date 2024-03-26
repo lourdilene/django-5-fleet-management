@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  django:
+    build: 
+      context: ./django
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - database
+    env_file:
+      - .env.development
+    networks:
+      - mynetwork
+
+  database:
+    image: "postgres:16.0-alpine3.18"
+    env_file:
+      - .env.development
+    ports:
+      - "5432:5432"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
