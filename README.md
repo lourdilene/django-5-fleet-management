@@ -1,8 +1,7 @@
 # fleet-management
 
-Run frontend
-cd frontend
-`ng serve`
+Install dependencie
+`pip install -r requirements.txt`
 
 Run backend
 `python manage.py runserver`
