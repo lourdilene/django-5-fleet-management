@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'fleet_management',
     
-    'corsheaders'
+    'corsheaders',
+    'drf_yasg',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
