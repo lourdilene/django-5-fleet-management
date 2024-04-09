@@ -46,8 +46,6 @@ def taxi_locations(request):
     Get a list of all taxi locations for a given taxi ID and date.
     """
     query_params = request.query_params
-    # logger = logging.getLogger(__name__)
-    # logger.debug(query_params)
     taxi_id = query_params.get('taxi_id')
     date = query_params.get('date')
 
