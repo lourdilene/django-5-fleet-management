@@ -154,56 +154,22 @@ REST_FRAMEWORK = {
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', 'testserver']
 
-#ALLOWED_HOSTS = ['127.0.0.1:8000', 'testserver']
-
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'handlers': {
-#         'file': {
-#             'level': 'DEBUG',
-#             'class': 'logging.FileHandler',
-#             'filename': 'debug.log',
-#         },
-#     },
-#     'loggers': {
-#         'django': {
-#             'handlers': ['file'],
-#             'level': 'DEBUG',
-#             'propagate': True,
-#         },
-#     },
-# }
-# logging.config.dictConfig(LOGGING)
-
-# Configuração do logger
-# logger = logging.getLogger(__name__)
-# logger.setLevel(logging.DEBUG)
-
-# # Define o formato das mensagens de log
-# formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-
-# # Cria um manipulador de arquivo rotativo para o arquivo debug.log
-# log_file = 'debug.log'
-# file_handler = RotatingFileHandler(log_file, maxBytes=1024 * 1024, backupCount=10)
-# file_handler.setFormatter(formatter)
-# logger.addHandler(file_handler)
-
-#import logging
-
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-
-# Crie um manipulador de arquivo
-file_handler = logging.FileHandler('debug.log')
-
-# Defina o nível de log para o manipulador de arquivo
-file_handler.setLevel(logging.DEBUG)
-
-# Crie um formatador para a saída do log
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-file_handler.setFormatter(formatter)
-
-# Adicione o manipulador de arquivo ao logger
-logger.addHandler(file_handler)
-
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'debug.log',
+        },
+    },
+    'loggers': {
+        'fleet_management': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
+logging.config.dictConfig(LOGGING)

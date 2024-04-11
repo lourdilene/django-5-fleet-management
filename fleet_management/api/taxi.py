@@ -5,6 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
 from django.core.paginator import Paginator
 from django.urls import reverse
+import logging
 from ..models.taxi import Taxi
 
 class CustomPagination(PageNumberPagination):
@@ -44,9 +45,13 @@ def get_taxis(request):
 
     paginator = Paginator(taxis, CustomPagination().page_size)
     page_number = request.GET.get('page')
+
     page_obj = paginator.get_page(page_number)
 
     data = [{"id": taxi.id, "plate": taxi.plate} for taxi in page_obj]
+
+    logger = logging.getLogger(__name__)
+    logger.debug(f"data: {data}")
 
     next_page_url = None
     if page_obj.has_next():
