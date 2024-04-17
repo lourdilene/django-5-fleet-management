@@ -18,14 +18,19 @@ from django.contrib import admin
 from django.urls import path
 from .api.taxi import get_taxis
 from .api.taxi_locations import taxi_locations
+from .api.export_to_excel import export_to_excel
+from .api.download_excel import download_excel
 from .api.last_taxi_location import last_taxi_location
 from .swagger import schema_view
 
 urlpatterns = [
-    #path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
     path('taxis/', get_taxis, name='get_taxis'),
 
     path('taxi_locations/', taxi_locations, name='taxi_locations'),
+
+    path('export_to_excel/', export_to_excel, name='export_to_excel'),
+    path('download_excel/', download_excel, name='download_excel'),
 
     path('taxis/<int:taxi_id>/last_location/', last_taxi_location, name='last_taxi_location'),
 

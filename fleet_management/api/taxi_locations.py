@@ -6,6 +6,7 @@ from rest_framework.pagination import PageNumberPagination
 from django.core.paginator import Paginator
 from django.urls import reverse
 from ..models import Trajectory
+import logging
 from ..serializers import TrajectorySerializer
 
 class CustomPagination(PageNumberPagination):
@@ -61,6 +62,9 @@ def taxi_locations(request):
     paginator = Paginator(trajectories, CustomPagination().page_size)
     page_number = query_params.get('page')
     page_obj = paginator.get_page(page_number)
+
+    logger = logging.getLogger(__name__)
+    logger.debug(f"page_obj: {TrajectorySerializer(page_obj, many=True).data}")
 
     data = TrajectorySerializer(page_obj, many=True).data
 

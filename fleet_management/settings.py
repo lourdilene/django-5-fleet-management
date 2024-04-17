@@ -16,6 +16,10 @@ import logging.config
 import logging
 from logging.handlers import RotatingFileHandler
 
+#celery configuration
+import os
+from celery import Celery
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -173,3 +177,12 @@ LOGGING = {
     },
 }
 logging.config.dictConfig(LOGGING)
+
+# CELERY_BROKER_URL = 'amqp://localhost'
+# CELERY_RESULT_BACKEND = 'rpc://'
+
+# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'fleet_management.settings')
+
+# app = Celery('fleet_management')
+# app.config_from_object('django.conf:settings', namespace='CELERY')
+# app.autodiscover_tasks()
