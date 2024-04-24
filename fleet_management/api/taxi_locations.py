@@ -8,6 +8,7 @@ from django.urls import reverse
 from ..models import Trajectory
 import logging
 from ..serializers import TrajectorySerializer
+from datetime import datetime
 
 class CustomPagination(PageNumberPagination):
     page_size = 10
@@ -48,14 +49,19 @@ def taxi_locations(request):
     """
     query_params = request.query_params
     taxi_id = query_params.get('taxi_id')
-    date = query_params.get('date')
+    date_str = query_params.get('date')
+
+    #date_str = '2008-02-08'
+
+    # Converter a string 'date' em um objeto datetime
+    date = datetime.strptime(date_str, '%Y-%m-%d')
 
     if taxi_id is None or date is None:
         return JsonResponse({'error': 'taxi_id and date are required'}, status=400)
 
     ordering = query_params.get('ordering', None)
 
-    trajectories = Trajectory.objects.filter(taxi_id=taxi_id, date=date).order_by('id')
+    trajectories = Trajectory.objects.filter(taxi_id=taxi_id, date__date=date.date()).order_by('id')
     if ordering:
         trajectories = trajectories.order_by(ordering)
 
