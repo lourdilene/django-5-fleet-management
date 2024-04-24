@@ -31,9 +31,6 @@ def export_to_excel(request):
 
 @shared_task
 def generate_excel_task(taxi_id, date, file_identifier, to_emails):
-
-    # logger = logging.getLogger(__name__)
-    # logger.debug(f"file_identifier: {file_identifier}")
     
     trajectories = Trajectory.objects.filter(taxi_id=taxi_id, date=date)
 
@@ -50,9 +47,6 @@ def generate_excel_task(taxi_id, date, file_identifier, to_emails):
 
     excel_content_file = ContentFile(excel_content.getvalue())
 
-    # logger = logging.getLogger(__name__)
-    # logger.debug(f"excel_content: {excel_content}")
-
     file_path = f'/home/lour/python-projects/fleet_management/generated_files/{file_identifier}_trajectories.xlsx'
 
     with open(file_path, 'wb') as f:
@@ -63,23 +57,14 @@ def generate_excel_task(taxi_id, date, file_identifier, to_emails):
 @shared_task
 def send_email_task(file_identifier, to_emails):
     subject = 'Your file is ready.'
-    message = 'You can make download your file in link below.'
-    #to_emails = ['lourdilene.souza@gmail.com', 'lourdilene@hotmail.com']  # Lista de emails
+
+    message = 'You can download your file using the link below:\n\n'
+    
+    download_link = f'http://127.0.0.1:8000/download_excel?file_identifier={file_identifier}'
+
+    message += download_link
+
     to_emails_list = [email.strip() for email in to_emails.split(',')]
-    file_path = '/home/lour/python-projects/fleet_management/debug.log'  # Opcional
 
     smtp_client = Smtp()
-    smtp_client.send_email(subject, message, to_emails_list, file_path)
-
-# @api_view(['GET'])
-# def download_excel(request):
-#     file_identifier = request.query_params.get('file_identifier')
-#     file_path = f'/home/lour/python-projects/fleet_management/generated_files/{file_identifier}_trajectories.xlsx'
-
-#     if os.path.exists(file_path):
-#         with open(file_path, 'rb') as f:
-#             response = HttpResponse(f.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-#             response['Content-Disposition'] = f'attachment; filename={file_identifier}_trajectories.xlsx'
-#             return response
-#     else:
-#         return JsonResponse({'error': 'File not found.'}, status=404)
+    smtp_client.send_email(subject, message, to_emails_list)
