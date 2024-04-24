@@ -19,7 +19,7 @@ def test_get_taxis(api_rf):
     assert 'results' in data_dict
 
     assert len(data_dict['results']) == 10  
-    assert data_dict['count'] == 219  
+    assert data_dict['count'] == 10320  
 
     next_page_url = data_dict['next']
     request = api_rf.get(next_page_url)

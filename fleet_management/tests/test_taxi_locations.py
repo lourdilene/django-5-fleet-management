@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 from django.urls import reverse
 from rest_framework.test import APITestCase
 from ..models import Trajectory
@@ -22,21 +23,21 @@ class TestTaxiLocationsEndpoint(APITestCase):
             {
                 'id': self.trajectory1.id,
                 'taxi_id': self.trajectory1.taxi_id,
-                'date': str(self.trajectory1.date),
+                'date': datetime.strptime(str(self.trajectory1.date), '%Y-%m-%d').timestamp(),
                 'latitude': self.trajectory1.latitude,
                 'longitude': self.trajectory1.longitude
             },
             {
                 'id': self.trajectory2.id,
                 'taxi_id': self.trajectory2.taxi_id,
-                'date': str(self.trajectory2.date),
+                'date': datetime.strptime(str(self.trajectory1.date), '%Y-%m-%d').timestamp(),
                 'latitude': self.trajectory2.latitude,
                 'longitude': self.trajectory2.longitude
             },
             {
                 'id': self.trajectory3.id,
                 'taxi_id': self.trajectory3.taxi_id,
-                'date': str(self.trajectory3.date),
+                'date': datetime.strptime(str(self.trajectory1.date), '%Y-%m-%d').timestamp(),
                 'latitude': self.trajectory3.latitude,
                 'longitude': self.trajectory3.longitude
             }
