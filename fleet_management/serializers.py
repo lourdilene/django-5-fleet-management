@@ -8,7 +8,7 @@ class DateField(serializers.Field):
     """
     def to_representation(self, value):
         # Convertendo o objeto datetime em uma string no formato ISO 8601
-        return value.timestamp() if value else None
+        return value.isoformat() if value else None
 
 class TrajectorySerializer(serializers.ModelSerializer):
     date = DateField()

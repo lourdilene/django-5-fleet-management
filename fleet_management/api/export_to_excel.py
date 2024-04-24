@@ -8,6 +8,7 @@ from openpyxl import Workbook
 from django.core.files.base import ContentFile
 from ..lib import Smtp
 import logging
+from datetime import datetime
 import os
 from io import BytesIO
 
@@ -31,28 +32,40 @@ def export_to_excel(request):
 
 @shared_task
 def generate_excel_task(taxi_id, date, file_identifier, to_emails):
-    
-    trajectories = Trajectory.objects.filter(taxi_id=taxi_id, date=date)
+    try:        
+        date_obj = datetime.strptime(date, '%Y-%m-%d')
+        trajectories = Trajectory.objects.filter(taxi_id=taxi_id, date__date=date_obj)
 
-    wb = Workbook()
-    ws = wb.active
+        wb = Workbook()
+        ws = wb.active
 
-    ws.append(['Latitude', 'Longitude'])
+        ws.append(['Latitude', 'Longitude'])
 
-    for trajectory in trajectories:
-        ws.append([trajectory.latitude, trajectory.longitude])
+        for trajectory in trajectories:
+            ws.append([trajectory.latitude, trajectory.longitude])
 
-    excel_content = BytesIO()
-    wb.save(excel_content)
+        excel_content = BytesIO()
+        wb.save(excel_content)
 
-    excel_content_file = ContentFile(excel_content.getvalue())
+        excel_content_file = ContentFile(excel_content.getvalue())
 
-    file_path = f'/home/lour/python-projects/fleet_management/generated_files/{file_identifier}_trajectories.xlsx'
+        logger = logging.getLogger(__name__)
+        logger.debug(f"excel_content_file: {excel_content_file}")
 
-    with open(file_path, 'wb') as f:
-        f.write(excel_content_file.read())
-    
-    send_email_task.delay(file_identifier, to_emails)
+        directory = '/home/lour/python-projects/fleet_management/generated_files/'
+
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+
+        file_path = os.path.join(directory, f'{file_identifier}_trajectories.xlsx')
+
+        with open(file_path, 'wb') as f:
+            f.write(excel_content_file.read())
+
+        send_email_task.delay(file_identifier, to_emails)
+    except Exception as e:
+        logger.error(f"Error generating Excel file: {str(e)}")
+
 
 @shared_task
 def send_email_task(file_identifier, to_emails):
