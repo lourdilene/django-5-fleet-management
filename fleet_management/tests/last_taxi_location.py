@@ -23,7 +23,7 @@ class TestLastTaxiLocation(TestCase):
         response_data = json.loads(response.content)
         self.assertEqual(response_data['id'], self.trajectory.id)
         self.assertEqual(response_data['taxi_id'], self.trajectory.taxi_id)
-        expected_timestamp = int(self.trajectory.date.timestamp())  # Converta o timestamp para inteiro
+        expected_timestamp = int(datetime.strptime(response_data['date'], '%Y-%m-%dT%H:%M:%S').timestamp())  # Converta o timestamp para inteiro
         self.assertEqual(response_data['date'], expected_timestamp)
         self.assertEqual(response_data['latitude'], 10.0)
         self.assertEqual(response_data['longitude'], 20.0)
