@@ -1,7 +1,6 @@
 ## fleet-management
 
-This project ...
-
+REST API of a Fleet Management Software to query the locations of the vehicles of a taxi company in Beijing, China.
 
 ### Installation
 
@@ -13,10 +12,34 @@ Install my-project with npm
   pip install -r requirements.txt
 ```
 
+Make migrations
+
+```bash
+  python manage.py makemigrations
+```
+
+Migrate
+
+```bash
+  python manage.py migrate
+```
+
 Run server
 
 ```bash
   python manage.py runserver
+```
+### Installing and Run RabbitMQ
+
+```bash
+  # latest RabbitMQ 3.13
+  docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.13-management
+```
+
+### Runing Celery
+
+```bash
+  celery -A fleet_management worker -l info
 ```
     
 ### Runing Tests
@@ -33,22 +56,7 @@ Run server
 
 
 ### 🛠 Skills
-Javascript, HTML, CSS, Responsive web pages, SPA, API openAi, Nodejs.  
-
-
-### Documentation
-
-- [Node Js](https://nodejs.org/docs/latest/api/)
-- [API OpenAi](https://platform.openai.com/docs/api-reference)
-
-
-### Lessons Learned
-
-### Demo
-
-Insert gif or link to demo.
-
-###  Reference Content
+Python3, Django, Queue, RabbitMQ, ORM, REST API.
 
 #### Tools
 
