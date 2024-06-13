@@ -1,6 +1,6 @@
 ## fleet-management
 
-REST API of a Fleet Management Software to query the locations of the vehicles of a taxi company in Beijing, China.
+REST API of a Fleet Management Software to query the locations of the vehicles of a taxi company.
 
 ### Installation
 
