@@ -2,6 +2,21 @@
 
 REST API of a Fleet Management Software to query the locations of the vehicles of a taxi company.
 
+- **Technical Details:**
+  - Used Python and Django to build the API.
+  - Implemented queues with RabbitMQ for optimizing asynchronous tasks.
+  - Utilized Celery for background processing.
+  - Implemented automated testing with Pytest.
+  - Used Docker to run RabbitMQ.
+  - Performance optimization strategies, including creating indexes on the location table, table partitioning, and progressive data querying.
+  - Endpoint for exporting locations in Excel format, with email notification to the user upon completion of processing.
+
+- **Results:**
+  - Significant reduction in endpoint response times through database optimizations and efficient queries.
+  - Improved user experience with optimized response times.
+  - Implementation of a robust export to Excel functionality, allowing users to obtain detailed reports.
+  - Enhanced scalability and performance of the application using asynchronous processing with Celery and RabbitMQ.
+
 ### Installation
 
 Install my-project with npm
